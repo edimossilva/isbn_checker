@@ -7,6 +7,7 @@ class IsbnCheck
 
   def isbn=(number)
     validate_isbn!(number)
+
     @isbn = number
   end
 
