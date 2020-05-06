@@ -12,4 +12,10 @@ module IsbnUtils
       even_inexes_array: even_inexes_array
     }
   end
+
+  def sum_arrays_nums(arrays_hash)
+    sum_odd_index = arrays_hash[:odd_inexes_array].reduce(0) { |sum, n| sum + (n * 3) }
+    sum_even_index = arrays_hash[:even_inexes_array].reduce(:+)
+    sum_odd_index + sum_even_index
+  end
 end
