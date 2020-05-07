@@ -1,4 +1,11 @@
 module IsbnUtils
+  require_relative './isbn_utils'
+
+  def number_to_indexes_array(number)
+    array = to_digits(number)
+    odd_even_indexes_arrays(array)
+  end
+
   def to_digits(number)
     number.to_s.split('').map(&:to_i)
   end

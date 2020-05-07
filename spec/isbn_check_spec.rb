@@ -5,21 +5,38 @@ require_relative '../src/isbn_check'
 RSpec.describe IsbnCheck do
   context '#initialize' do
     let!(:companies_quantity) { 33 }
-    let!(:number12_digits) { Faker::Number.number(digits: 12) }
     let!(:random_string) { Faker::String.random(length: 12) }
-
-    let!(:number12_digits_negative) { -number12_digits }
+    let!(:number12_digits_negative) { -Faker::Number.number(digits: 12) }
 
     context 'When receives a number' do
       context 'When has 12 digits' do
         context 'When is a positive number' do
-          subject(:subject) { IsbnCheck.new(number12_digits) }
+          context 'When sum_mode is not zero' do
+            let!(:isbn_12) { 978_014_300_723 }
+            let!(:isbn_13) { 9_780_143_007_234 }
 
-          it 'creates a instance' do
-            expect(subject).to be_an(IsbnCheck)
+            subject(:subject) { IsbnCheck.new(isbn_12) }
+
+            it 'creates a instance' do
+              expect(subject).to be_an(IsbnCheck)
+            end
+            it 'set @isbn' do
+              expect(subject.isbn).to eq(isbn_13)
+            end
           end
-          it 'set @isbn' do
-            expect(subject.isbn).to eq(number12_digits)
+
+          context 'When sum_mode is zero' do
+            let!(:isbn_12_with_sum_mode_zero) { 978_014_300_718 }
+            let!(:isbn_13) { 9_780_143_007_180 }
+
+            subject(:subject) { IsbnCheck.new(isbn_12_with_sum_mode_zero) }
+
+            it 'creates a instance' do
+              expect(subject).to be_an(IsbnCheck)
+            end
+            it 'set @isbn' do
+              expect(subject.isbn).to eq(isbn_13)
+            end
           end
         end
 
